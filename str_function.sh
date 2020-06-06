@@ -47,6 +47,24 @@ function strtolower ()
 }
 
 
+<<EOF
+秒数转为为方便阅读时间
+EOF
+
+function friendlyTimeLen ()
+{
+	time_len=$1
+
+	hours=$(($time_len / 3600 ))
+	mins=$((($time_len-$hours*3600)/60))
+	second=$(($time_len-$hours*3600-$mins*60))
+
+	time=($hours $mins $second)
+
+	echo ${time[*]}
+}
+
+
 #demo date转为数组
 date="2020-05-28"
 date_args=($(explode '-' $date))
@@ -58,6 +76,12 @@ echo $str
 
 str=($(strtolower "SAAASDFF"))
 echo $str
+
+
+#返回数组实质是方法依次echo结果，调用变量转为数组
+time_args=($(friendlyTimeLen 3663))
+
+echo "耗时：${time_args[0]}h ${time_args[1]}min ${time_args[2]}s"
 
 
 
