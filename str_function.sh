@@ -65,23 +65,48 @@ function friendlyTimeLen ()
 }
 
 
+<<EOF
+获取随机数
+EOF
+
+function random()
+{
+	min=$1
+	max=$2
+
+	if [ "$1" -gt "$2" ]; then
+		echo "min is greater than max"
+		exit 1
+	fi
+
+	diff=$(($max-$min))
+
+	#$RANDOM 必须先乘后除，原因是 shell 把运算结果转为整型。
+	#如果 $RANDOM 先除 32767，因为 $RANDOM 不会大于 32767，计算结果为 0.XXX ，转为整型得 0，所以下面的式子恒为 min
+
+	echo $(($min+$diff*$RANDOM/32767))
+}
+
+
 #demo date转为数组
-date="2020-05-28"
-date_args=($(explode '-' $date))
+# date="2020-05-28"
+# date_args=($(explode '-' $date))
 
 
-str=($(strtoupper "sdssdssd"))
-echo $str
+# str=($(strtoupper "sdssdssd"))
+# echo $str
 
 
-str=($(strtolower "SAAASDFF"))
-echo $str
+# str=($(strtolower "SAAASDFF"))
+# echo $str
 
 
-#返回数组实质是方法依次echo结果，调用变量转为数组
-time_args=($(friendlyTimeLen 3663))
+# #返回数组实质是方法依次echo结果，调用变量转为数组
+# time_args=($(friendlyTimeLen 3663))
 
-echo "耗时：${time_args[0]}h ${time_args[1]}min ${time_args[2]}s"
+# echo "耗时：${time_args[0]}h ${time_args[1]}min ${time_args[2]}s"
+
+random 10 15
 
 
 
